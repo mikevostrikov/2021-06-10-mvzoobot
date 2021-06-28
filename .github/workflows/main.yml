@@ -39,7 +39,7 @@ jobs:
         python -m pip install --target lambda-package -r requirements-lambda.txt
         find lambda-package/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
         cp main.py lambda-package/main.py
-        (cd lambda-package && deterministic_zip -r ../lambda-package.zip .)
+        (cd lambda-package && deterministic_zip ../lambda-package.zip .)
       working-directory: app
 
     - name: Set TF_WORKSPACE to dev
