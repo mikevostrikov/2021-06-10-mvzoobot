@@ -31,14 +31,15 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Install dependencies
-      run: sudo apt-get install zip
+    - name: Install deterministic-zip
+      run: pip install deterministic-zip
 
     - name: Package lambda-function
       run: |
         python -m pip install --target lambda-package -r requirements-lambda.txt
-        (cd lambda-package && zip -r ../lambda-package.zip .)
-        zip -g lambda-package.zip main.py
+        find lambda-package/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+        cp main.py lambda-package/main.py
+        (cd lambda-package && deterministic_zip -r ../lambda-package.zip .)
       working-directory: app
 
     - name: Set TF_WORKSPACE to dev
