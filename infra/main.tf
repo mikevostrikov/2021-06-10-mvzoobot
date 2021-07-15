@@ -104,6 +104,7 @@ resource "aws_lambda_function" "lambda" {
 resource "aws_cloudwatch_event_rule" "trigger" {
   name = local.app
   schedule_expression = "rate(10 minutes)"
+  is_enabled = false
 }
 
 resource "aws_cloudwatch_event_target" "lambda" {
